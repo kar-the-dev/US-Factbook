@@ -3,34 +3,697 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>US Factbook - Home</title>
-    <link rel="stylesheet" href="style.css">
+    <title>US Fact Book - Comprehensive Information About America</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            color: #1e3c72;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .flag {
+            width: 40px;
+            height: 30px;
+            background: linear-gradient(to bottom, #B22234 0%, #B22234 7.7%, #FFFFFF 7.7%, #FFFFFF 15.4%, #B22234 15.4%);
+            border: 2px solid #ddd;
+            border-radius: 3px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover, nav a.active {
+            background: #1e3c72;
+            color: white;
+        }
+
+        .hero {
+            background: rgba(255, 255, 255, 0.9);
+            margin: 2rem 0;
+            border-radius: 15px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 2rem 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-header {
+            background: #1e3c72;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .section-header h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .fact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .fact-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 5px solid #1e3c72;
+        }
+
+        .fact-card h4 {
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #1e3c72;
+        }
+
+        .btn {
+            background: #1e3c72;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #2a5298;
+            transform: translateY(-2px);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-item {
+            background: #f8f9fa;
+            margin: 1rem 0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 5px solid #1e3c72;
+        }
+
+        .timeline-year {
+            color: #1e3c72;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        footer {
+            background: rgba(30, 60, 114, 0.9);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #1e3c72;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .fact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="information.html">Information</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-        </ul>
-    </nav>
-
     <header>
-        <h1>Welcome to US Factbook</h1>
-        <p>A trusted source of information about the United States.</p>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="flag"></div>
+                    <h1>US Fact Book</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" onclick="showSection('home')" class="active">Home</a></li>
+                        <li><a href="#" onclick="showSection('geography')">Geography</a></li>
+                        <li><a href="#" onclick="showSection('history')">History</a></li>
+                        <li><a href="#" onclick="showSection('government')">Government</a></li>
+                        <li><a href="#" onclick="showSection('economy')">Economy</a></li>
+                        <li><a href="#" onclick="showSection('culture')">Culture</a></li>
+                        <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </header>
 
-    <main>
-        <section>
-            <h2>About Us</h2>
-            <p>We are a public information organization trusted by millions, providing accurate and reliable facts about the United States.</p>
-        </section>
-    </main>
+    <div class="container">
+        <!-- Home Section -->
+        <div id="home" class="content-section active">
+            <div class="hero">
+                <h2>Welcome to the US Fact Book</h2>
+                <p>Your comprehensive educational resource for learning about the United States of America. Explore geography, history, government, economy, and culture through detailed information and interactive content.</p>
+            </div>
+
+            <div class="stats-container">
+                <div class="stat-box">
+                    <div class="stat-number">50</div>
+                    <div>States</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">331M</div>
+                    <div>Population</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">3.8M</div>
+                    <div>Square Miles</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">1776</div>
+                    <div>Founded</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Geography Section -->
+        <div id="geography" class="content-section">
+            <div class="section-header">
+                <h3>Geography & Climate</h3>
+                <p>Exploring America's diverse landscapes and natural features</p>
+            </div>
+            <div class="section-content">
+                <div class="fact-grid">
+                    <div class="fact-card">
+                        <h4>Total Area</h4>
+                        <p>The United States covers approximately 3.8 million square miles, making it the third-largest country in the world by total area.</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Highest Point</h4>
+                        <p>Denali (Mount McKinley) in Alaska stands at 20,310 feet above sea level, making it the highest peak in North America.</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Longest River</h4>
+                        <p>The Missouri River stretches 2,341 miles, making it the longest river in the United States.</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Great Lakes</h4>
+                        <p>The five Great Lakes (Superior, Michigan, Huron, Erie, and Ontario) contain about 21% of the world's fresh surface water.</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Climate Zones</h4>
+                        <p>The US spans multiple climate zones from arctic in Alaska to tropical in Hawaii and Florida.</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>National Parks</h4>
+                        <p>There are 63 designated National Parks, with Yellowstone being the first established in 1872.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Section -->
+        <div id="history" class="content-section">
+            <div class="section-header">
+                <h3>American History</h3>
+                <p>Key events that shaped the United States</p>
+            </div>
+            <div class="section-content">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">1776</div>
+                        <h4>Declaration of Independence</h4>
+                        <p>The thirteen American colonies declared independence from British rule on July 4, 1776.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1787</div>
+                        <h4>Constitutional Convention</h4>
+                        <p>The US Constitution was drafted, establishing the framework for the federal government.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1803</div>
+                        <h4>Louisiana Purchase</h4>
+                        <p>The US doubled in size with the purchase of Louisiana Territory from France.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1861-1865</div>
+                        <h4>Civil War</h4>
+                        <p>A devastating conflict that ended slavery and preserved the Union.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1969</div>
+                        <h4>Moon Landing</h4>
+                        <p>Apollo 11 successfully landed the first humans on the Moon.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Government Section -->
+        <div id="government" class="content-section">
+            <div class="section-header">
+                <h3>Government & Politics</h3>
+                <p>Understanding the American political system</p>
+            </div>
+            <div class="section-content">
+                <div class="fact-grid">
+                    <div class="fact-card">
+                        <h4>System of Government</h4>
+                        <p>Federal democratic republic with separation of powers among executive, legislative, and judicial branches.</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Executive Branch</h4>
+                        <p>Led by the President, who serves as both head of state and head of government for a four-year term.</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Legislative Branch</h4>
+                        <p>Bicameral Congress consisting of the House of Representatives (435 members) and Senate (100 members).</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Judicial Branch</h4>
+                        <p>Headed by the Supreme Court with nine justices who serve life terms.</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Bill of Rights</h4>
+                        <p>The first ten amendments to the Constitution guarantee fundamental rights and freedoms.</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Federalism</h4>
+                        <p>Power is shared between federal government and 50 state governments.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Economy Section -->
+        <div id="economy" class="content-section">
+            <div class="section-header">
+                <h3>Economy & Industry</h3>
+                <p>America's economic landscape and major industries</p>
+            </div>
+            <div class="section-content">
+                <div class="fact-grid">
+                    <div class="fact-card">
+                        <h4>GDP</h4>
+                        <p>The US has the world's largest economy with a GDP of over $25 trillion as of 2023.</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Technology Sector</h4>
+                        <p>Silicon Valley is home to major tech companies like Apple, Google, and Meta.</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Agriculture</h4>
+                        <p>The US is a leading producer of corn, soybeans, wheat, and beef.</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Manufacturing</h4>
+                        <p>Major industries include automotive, aerospace, machinery, and chemicals.</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Stock Markets</h4>
+                        <p>Wall Street in New York City hosts the world's largest stock exchanges.</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Innovation</h4>
+                        <p>The US leads in research and development, spending over $600 billion annually.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Culture Section -->
+        <div id="culture" class="content-section">
+            <div class="section-header">
+                <h3>Culture & Society</h3>
+                <p>American culture, traditions, and diversity</p>
+            </div>
+            <div class="section-content">
+                <div class="fact-grid">
+                    <div class="fact-card">
+                        <h4>Diversity</h4>
+                        <p>America is known as a "melting pot" with people from many different ethnic and cultural backgrounds.</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Languages</h4>
+                        <p>While English is the primary language, over 350 languages are spoken in the US.</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Sports</h4>
+                        <p>Popular sports include American football, baseball, basketball, and ice hockey.</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Entertainment</h4>
+                        <p>Hollywood is the global center of the film industry, producing movies and TV shows worldwide.</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Music</h4>
+                        <p>America is the birthplace of jazz, blues, country, rock and roll, and hip-hop music.</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Holidays</h4>
+                        <p>Major holidays include Independence Day, Thanksgiving, Christmas, and Memorial Day.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div id="contact" class="content-section">
+            <div class="section-header">
+                <h3>Contact Us</h3>
+                <p>Get in touch with questions or feedback about the US Fact Book</p>
+            </div>
+            <div class="section-content">
+                <form class="contact-form" onsubmit="handleFormSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Subject *</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Select a topic...</option>
+                            <option value="general">General Question</option>
+                            <option value="geography">Geography Information</option>
+                            <option value="history">Historical Facts</option>
+                            <option value="government">Government Questions</option>
+                            <option value="economy">Economic Data</option>
+                            <option value="culture">Cultural Information</option>
+                            <option value="feedback">Website Feedback</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" rows="6" placeholder="Please share your question, feedback, or suggestions..." required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="grade">Grade Level (Optional)</label>
+                        <select id="grade" name="grade">
+                            <option value="">Select grade level...</option>
+                            <option value="elementary">Elementary (K-5)</option>
+                            <option value="middle">Middle School (6-8)</option>
+                            <option value="high">High School (9-12)</option>
+                            <option value="college">College</option>
+                            <option value="adult">Adult/Other</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+                
+                <div id="form-response" style="margin-top: 2rem; padding: 1rem; border-radius: 8px; display: none;"></div>
+            </div>
+        </div>
+    </div>
 
     <footer>
-        &copy; 2025 US Factbook | All Rights Reserved
+        <div class="container">
+            <p>&copy; 2025 US Fact Book - Educational Project. All information is for educational purposes only.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">This website is a student project and is not affiliated with any government agency.</p>
+        </div>
     </footer>
 
-    <img src="eagle.png" alt="Bald Eagle" id="bald-eagle">
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav links
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to clicked nav link
+            event.target.classList.add('active');
+            
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(event.target);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            const grade = formData.get('grade');
+            
+            // Simulate form processing
+            const responseDiv = document.getElementById('form-response');
+            responseDiv.style.display = 'block';
+            responseDiv.style.background = '#d4edda';
+            responseDiv.style.color = '#155724';
+            responseDiv.style.border = '1px solid #c3e6cb';
+            
+            responseDiv.innerHTML = `
+                <h4>Thank you for your message, ${name}!</h4>
+                <p>We've received your ${subject.replace('-', ' ')} inquiry and will get back to you at ${email} within 24-48 hours.</p>
+                <p><strong>Your message:</strong> "${message.substring(0, 100)}${message.length > 100 ? '...' : ''}"</p>
+                ${grade ? `<p><strong>Grade Level:</strong> ${grade}</p>` : ''}
+                <p style="margin-top: 1rem; font-size: 0.9rem;"><em>Note: This is a demonstration form for an educational project. No actual email will be sent.</em></p>
+            `;
+            
+            // Reset form
+            event.target.reset();
+            
+            // Scroll to response
+            responseDiv.scrollIntoView({ behavior: 'smooth' });
+            
+            // Hide response after 10 seconds
+            setTimeout(() => {
+                responseDiv.style.display = 'none';
+            }, 10000);
+        }
+
+        // Add some interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to fact cards
+            const factCards = document.querySelectorAll('.fact-card');
+            factCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.boxShadow = '0 10px 25px rgba(0,0,0,0.1)';
+                    this.style.transition = 'all 0.3s ease';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+
+            // Add animation to stats on scroll
+            const observerOptions = {
+                threshold: 0.5,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe stat boxes
+            document.querySelectorAll('.stat-box').forEach(box => {
+                observer.observe(box);
+            });
+        });
+
+        // Add CSS animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>
